@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Anniversary Greetings</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin-top: 50px;
+    }
+
+    #image-upload {
+      margin-top: 30px;
+    }
+
+    #image-preview {
+      max-width: 400px;
+      margin-top: 30px;
+    }
+
+    #greeting-input {
+      margin-top: 30px;
+      width: 400px;
+      height: 200px;
+    }
+    
+    #submit-button {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Anniversary Greetings</h1>
+
+  <form id="image-upload" enctype="multipart/form-data">
+    <input type="file" id="image-input" accept="image/*">
+  </form>
+
+  <div id="image-preview"></div>
+
+  <textarea id="greeting-input" placeholder="Enter your anniversary greeting here"></textarea>
+
+  <button id="submit-button" onclick="createGreeting()">Create Greeting</button>
+
+  <script>
+    function createGreeting() {
+      var imageInput = document.getElementById('image-input');
+      var greetingInput = document.getElementById('greeting-input');
+
+      var selectedImage = imageInput.files[0];
+      var greeting = greetingInput.value;
+
+      if (selectedImage && greeting) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          var imagePreview = document.getElementById('image-preview');
+          var imageElement = document.createElement('img');
+          imageElement.src = event.target.result;
+          imageElement.alt = 'Anniversary Image';
+          imageElement.style.maxWidth = '100%';
+          imagePreview.appendChild(imageElement);
+
+          var greetingText = document.createElement('p');
+          greetingText.textContent = greeting;
+          imagePreview.appendChild(greetingText);
+        };
+        reader.readAsDataURL(selectedImage);
+      } else {
+        alert('Please select an image and enter a greeting.');
+      }
+    }
+  </script>
+</body>
+</html>
